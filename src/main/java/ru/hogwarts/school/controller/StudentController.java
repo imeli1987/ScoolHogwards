@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("students")
@@ -28,8 +26,19 @@ public class StudentController{
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Student>> getAllStudents(){
-        return ResponseEntity.ok(studentService.getAllStudents());
+    public ResponseEntity getAllStudents(@RequestParam(required = false) Integer minAge,
+                                         @RequestParam(required = false) Integer maxAge ){
+        if (minAge == null && maxAge == null) {
+            return ResponseEntity.ok( studentService.getAllStudents() );
+        }
+
+        if ( minAge == null){
+            minAge = 0;
+        }
+        if ( maxAge == null){
+            maxAge = 0;}
+
+        return ResponseEntity.ok( studentService.findByAgeBetween( minAge, maxAge ) );
     }
 
     @GetMapping("age/{age}")
@@ -64,31 +73,3 @@ public class StudentController{
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

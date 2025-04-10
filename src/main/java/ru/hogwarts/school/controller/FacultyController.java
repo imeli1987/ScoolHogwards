@@ -29,7 +29,13 @@ public class FacultyController{
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> getAllFaculty(){
+    public ResponseEntity<Collection<Faculty>> getAllFaculty(@RequestParam(required = false) String name, @RequestParam(required = false) String color){
+        if (name!=null && name.isEmpty() ){
+            return ResponseEntity.ok( facultyService.findFacultyByName( name ) );
+        }
+        if (color!=null && color.isEmpty() ){
+            return ResponseEntity.ok( facultyService.findFacultyByColor( color ) );
+        }
         return ResponseEntity.ok( facultyService.getAllFaculty() );
     }
 
@@ -63,6 +69,4 @@ public class FacultyController{
         facultyService.deleteFaculty( id );
         return ResponseEntity.ok().build();
     }
-
-
 }
