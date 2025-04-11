@@ -69,4 +69,15 @@ public class FacultyController{
         facultyService.deleteFaculty( id );
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/students/{name}")
+    public ResponseEntity<Faculty> getFacultiesByStudentsName( String name){
+        Faculty faculty = facultyService.getFacultiesByStudentsName( name );
+        if ( faculty == null ){
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(faculty);
+        }
+    }
+
 }
