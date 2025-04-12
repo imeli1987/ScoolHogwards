@@ -2,19 +2,19 @@ package ru.hogwarts.school.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.service.StudentService;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("students")
 public class StudentController{
     private final StudentService studentService;
 
-    public StudentController( StudentService studentService ){
+    public StudentController(StudentService studentService){
         this.studentService = studentService;
     }
 
@@ -28,8 +28,9 @@ public class StudentController{
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Student>> getAllStudents(){
-        return ResponseEntity.ok(studentService.getAllStudents());
+    public ResponseEntity<Collection<Student>> getAllStudents(@RequestParam(required = false) Integer minAge,
+                                         @RequestParam(required = false) Integer maxAge ){
+        return ResponseEntity.ok( studentService.findByAgeBetween( minAge, maxAge ) );
     }
 
     @GetMapping("age/{age}")
@@ -63,19 +64,15 @@ public class StudentController{
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("faculty/{name}")
+    public ResponseEntity<List<Student>> getStudentsByFacultyName( String name){
+        if (name == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(studentService.getStudentsByFacultyName(name));
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
