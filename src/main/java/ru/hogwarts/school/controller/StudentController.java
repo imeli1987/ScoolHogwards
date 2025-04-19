@@ -65,11 +65,12 @@ public class StudentController{
     }
 
     @GetMapping("faculty/{name}")
-    public ResponseEntity<List<Student>> getStudentsByFacultyName( String name){
-        if (name == null){
+    public ResponseEntity<List<Student>> getStudentsByFacultyName( @PathVariable String name){
+        List<Student> students = studentService.getStudentsByFacultyName( name );
+        if (students == null || students.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(studentService.getStudentsByFacultyName(name));
+        return ResponseEntity.ok(students);
     }
 
 }
