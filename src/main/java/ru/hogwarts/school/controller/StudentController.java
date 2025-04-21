@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
@@ -14,6 +15,7 @@ import java.util.*;
 public class StudentController{
     private final StudentService studentService;
 
+    @Autowired
     public StudentController(StudentService studentService){
         this.studentService = studentService;
     }
