@@ -40,8 +40,8 @@ public class FacultyController{
     }
 
     @GetMapping("/color/{color}")
-    public ResponseEntity<Collection<Faculty>> getFilteredFacultyByColor(@PathVariable String color){
-        Collection<Faculty> filteredFaculty = facultyService.filteredFacultyByColor( color );
+    public ResponseEntity<Faculty> getFilteredFacultyByColor(@PathVariable String color){
+        Faculty filteredFaculty = facultyService.filteredFacultyByColor( color );
         if ( filteredFaculty == null ){
             return ResponseEntity.notFound().build();
         } else {
@@ -54,7 +54,7 @@ public class FacultyController{
         return facultyService.createFaculty( faculty );
     }
 
-    @PutMapping
+    @PutMapping("{id}")
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty){
         Faculty foundFaculty = facultyService.editFaculty( faculty );
         if ( foundFaculty == null ){
@@ -71,7 +71,7 @@ public class FacultyController{
     }
 
     @GetMapping("/students/{name}")
-    public ResponseEntity<Faculty> getFacultiesByStudentsName( String name){
+    public ResponseEntity<Faculty> getFacultiesByStudentsName(@PathVariable String name){
         Faculty faculty = facultyService.getFacultiesByStudentsName( name );
         if ( faculty == null ){
             return ResponseEntity.notFound().build();
