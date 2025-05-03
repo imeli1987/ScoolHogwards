@@ -75,6 +75,16 @@ public class StudentController{
         return ResponseEntity.ok(students);
     }
 
+    @GetMapping("/A")
+    public ResponseEntity<List<String>> findAllNamedStartingWithA(){
+        return ResponseEntity.ok( studentService.findAllNamedStartingWithA() );
+    }
+
+    @GetMapping("/averageAge")
+    public ResponseEntity<Double> avgAgeAllStudents(){
+        return ResponseEntity.ok( studentService.avgAgeAllStudents() );
+    }
+
 }
 
 
